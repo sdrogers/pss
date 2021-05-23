@@ -7,3 +7,7 @@
 - activate the virtual environment
 - from within the environment, install the packages listed in the requirements.txt file with `pip install -r requirements.txt` (you'll need to run that from inside the repo folder)
   
+## starting flask
+
+`set FLASK_APP=app.py`
+`set FLASK_END=development`

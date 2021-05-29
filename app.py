@@ -14,6 +14,23 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
+# Useful method to just reset all the stuff in the cookie
+def reset_cookie(response):
+    response.set_cookie('ai_total', json.dumps(0))
+    response.set_cookie('user_total', json.dumps(0))
+    response.set_cookie('history', json.dumps([]))
+    return response
+
+# turn a history of ints into strings to make it nicer
+# for visualisation
+def make_pretty_history(history):
+    pretty_history = []
+    for h in history:
+        pretty_history.append([MOVE_DICT[h[0]], MOVE_DICT[h[1]]])
+    return pretty_history
+
+
 # Called from index with players name
 # adds name to cookie
 # returns main.html, passing name
@@ -21,20 +38,19 @@ def index():
 def addname():
     if request.method == 'POST':
         name = request.form['name']
-        resp = make_response(render_template('main.html', name=name))
-        resp.set_cookie('name', json.dumps(name))
-        resp.set_cookie('ai_total', json.dumps(0))
-        resp.set_cookie('user_total', json.dumps(0))
-        resp.set_cookie('history', json.dumps([]))
-        
+        response = make_response(render_template('main.html', name=name))
+        response = reset_cookie(response)
+        response.set_cookie('name', name)
     else:
-        resp = render_template('index.html')
-    return resp
+        response = render_template('index.html')
+    return response
 
 @app.route('/play')
 def play():
     name = json.loads(request.cookies.get('name'))
-    return render_template('play.html', name=name, vm = VALID_MOVES)
+    user_total = int(json.loads(request.cookies.get('user_total')))
+    ai_total = int(json.loads(request.cookies.get('ai_total')))
+    return render_template('play.html', name=name, user_total=user_total, ai_total=ai_total)
 
 @app.route('/submit_move', methods=['POST', 'GET'])
 def submit_move():
@@ -69,17 +85,16 @@ def submit_move():
 
         print("USER: {}, AI: {}".format(user_total, ai_total))
 
+
         history.append((ai_move, user_move))
 
-        nice_history = []
-        for h in history:
-            nice_history.append([MOVE_DICT[h[0]], MOVE_DICT[h[1]]])
+        pretty_history = make_pretty_history(history)
 
         response = make_response(render_template('result.html', 
                                                   result=result, 
                                                   user=user_total, 
                                                   ai=ai_total,
-                                                  history=nice_history))
+                                                  history=pretty_history))
 
         response.set_cookie('user_total', json.dumps(user_total))
         response.set_cookie('ai_total', json.dumps(ai_total))
@@ -92,7 +107,5 @@ def submit_move():
 def reset_scores():
     name = request.cookies.get('name')
     response = make_response(render_template('play.html', name=name))
-    response.set_cookie('ai_total', json.dumps(0))
-    response.set_cookie('user_total', json.dumps(0))
-    response.set_cookie('history', json.dumps([]))
+    response = reset_cookie(response)
     return response

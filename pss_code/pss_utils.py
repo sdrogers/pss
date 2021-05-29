@@ -6,7 +6,7 @@ SCISSORS = 1
 STONE = 2
 VALID_MOVES = set([PAPER, SCISSORS, STONE])
 
-MOVE_DICT = {0: 'Paper', 1: 'Scissors', 2: 'Stone'}
+MOVE_DICT = {PAPER: 'Paper', SCISSORS: 'Scissors', STONE: 'Stone'}
 
 #method to check winner of the round
 

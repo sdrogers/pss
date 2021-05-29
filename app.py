@@ -34,10 +34,20 @@ def play():
 
 @app.route('/submit_move', methods=['POST', 'GET'])
 def submit_move():
-    user_total = request.cookies.get('user', 0)
-    ai_total = request.cookies.get('AI', 0)
+    user_total = request.cookies.get('user')
+    if user_total is None:
+        user_total = 0
+    else:
+        user_total = json.loads(user_total)
+    
+    ai_total = request.cookies.get('AI')
+    if ai_total is None:
+        ai_total = 0
+    else:
+        ai_total = json.loads(ai_total)
     if request.method == 'POST':
         move = request.form['move']
+        move = int(move)
         ai_move = pick_move()
         ww = check_winner(ai_move, move)
         ai_total += ww
@@ -49,13 +59,8 @@ def submit_move():
             result = 'Draw'
         user_total += -ww
         response = make_response(render_template('result.html', result=result, user=user_total, ai=ai_total))
-        response.set_cookie('user': user_total)
-        response.set_cookie('AI': ai_total)
+        response.set_cookie('user', json.dumps(user_total))
+        response.set_cookie('AI', json.dumps(ai_total))
     else:
         response = render_template('play.html')
     return response
-
-
-@app.route('/hello/<name>')
-def goodbye_world(name):
-    return "goodbye " + name

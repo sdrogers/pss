@@ -52,27 +52,28 @@ def play():
     ai_total = int(json.loads(request.cookies.get('ai_total')))
     return render_template('play.html', name=name, user_total=user_total, ai_total=ai_total)
 
+# Main logic, called when a user makes their move and a POST request
+# is sent from play.
 @app.route('/submit_move', methods=['POST', 'GET'])
 def submit_move():
+    
+    # Get the current totals and history
     user_total = request.cookies.get('user_total')
-    if user_total is None:
-        user_total = 0
-    else:
-        user_total = json.loads(user_total)
+    user_total = json.loads(user_total)
     
     ai_total = request.cookies.get('ai_total')
-    if ai_total is None:
-        ai_total = 0
-    else:
-        ai_total = json.loads(ai_total)
+    ai_total = json.loads(ai_total)
     
     history = json.loads(request.cookies.get('history'))
 
-    print("USER: {}, AI: {}".format(user_total, ai_total))
-    
     if request.method == 'POST':
+        # Get the user's move
         user_move = int(request.form['move'])
+
+        # Get the AI move
         ai_move = pick_move()
+
+        # Check the winner
         ww = check_winner(ai_move, user_move)
         if ww == 1:
             result = 'AI won!'
@@ -83,24 +84,26 @@ def submit_move():
         else:
             result = 'Draw'
 
-        print("USER: {}, AI: {}".format(user_total, ai_total))
-
-
+        # Add the round to the history
         history.append((ai_move, user_move))
 
+        # Make the history nice for displaying (replaces the numbers with strings)
         pretty_history = make_pretty_history(history)
 
+        # Make the response
         response = make_response(render_template('result.html', 
                                                   result=result, 
                                                   user=user_total, 
                                                   ai=ai_total,
                                                   history=pretty_history))
 
+        # Update the cookies
         response.set_cookie('user_total', json.dumps(user_total))
         response.set_cookie('ai_total', json.dumps(ai_total))
         response.set_cookie('history', json.dumps(history))
     else:
-        response = render_template('play.html')
+        name = json.loads(request.cookies.get('name'))
+        response = render_template('play.html', user_total=user_total, ai_total=ai_total, name=name)
     return response
 
 @app.route('/reset_scores')

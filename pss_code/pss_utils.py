@@ -6,6 +6,8 @@ SCISSORS = 1
 STONE = 2
 VALID_MOVES = set([PAPER, SCISSORS, STONE])
 
+MOVE_DICT = {0: 'Paper', 1: 'Scissors', 2: 'Stone'}
+
 #method to check winner of the round
 
 def check_winner(p1_choice, p2_choice):

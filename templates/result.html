@@ -4,9 +4,16 @@
         <p>Current score</p>
         <ul>
             <li>You {{user}}</li>
-            <li>AI {{AI}}</li>
+            <li>AI {{ai}}</li>
         </ul>
         <a href="/play">play again</a>
+        <a href="/reset_scores">reset scores</a>
+        <p>history</p>
+        <ul>
+            {% for h in history %}
+                <li>AI: {{h.0}} v {{h.1}} USER</li>
+            {% endfor %}
+        </ul>
     </body>
 
 </html>

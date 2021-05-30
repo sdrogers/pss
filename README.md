@@ -9,5 +9,12 @@
   
 ## starting flask
 
+### Windows
+
 `set FLASK_APP=app.py`
-`set FLASK_END=development`
+
+`set FLASK_ENV=development`
+
+### The others
+
+`export` instead of `set`

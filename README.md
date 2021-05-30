@@ -15,6 +15,8 @@
 
 `set FLASK_ENV=development`
 
+`flask run`
+
 ### The others
 
 `export` instead of `set`

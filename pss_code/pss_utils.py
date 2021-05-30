@@ -23,11 +23,3 @@ def check_winner(p1_choice, p2_choice):
     elif p2_choice == p1_choice:
         winner = 0
     return winner
-
-
-
-if __name__ == "__main__":
-    assert check_winner(PAPER, SCISSORS) == -1
-    assert check_winner(PAPER, STONE) == 1
-    assert check_winner(SCISSORS, SCISSORS) == 0
-    

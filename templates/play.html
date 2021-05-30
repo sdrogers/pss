@@ -1,0 +1,13 @@
+<html>
+    <h3>Hello {{name}}</h3>
+    <h4>Current score</h4>
+    <p>You {% if user_total %} {{user_total}} {% else %} 0 {% endif %} v {% if ai_total %} {{ai_total}} {% else %} 0 {% endif %}AI</p>
+    <form action = "/submit_move" method = "POST">
+        <select id = "move_choice" name = "move">
+            <option value = 0>Paper</option>
+            <option value = 1>Scissors</option>
+            <option value = 2>Stone</option>
+        </select>
+        <input type = 'submit' value = 'Play' />
+    </form>
+</html>

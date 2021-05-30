@@ -47,7 +47,7 @@ def addname():
 
 @app.route('/play')
 def play():
-    name = json.loads(request.cookies.get('name'))
+    name = request.cookies.get('name')
     user_total = int(json.loads(request.cookies.get('user_total')))
     ai_total = int(json.loads(request.cookies.get('ai_total')))
     return render_template('play.html', name=name, user_total=user_total, ai_total=ai_total)

@@ -17,8 +17,8 @@ def index():
 
 # Useful method to just reset all the stuff in the cookie
 def reset_cookie(response):
-    response.set_cookie('ai_total', json.dumps(0))
-    response.set_cookie('user_total', json.dumps(0))
+    response.set_cookie('ai_total', '0')
+    response.set_cookie('user_total', '0')
     response.set_cookie('history', json.dumps([]))
     return response
 
@@ -58,11 +58,8 @@ def play():
 def submit_move():
     
     # Get the current totals and history
-    user_total = request.cookies.get('user_total')
-    user_total = json.loads(user_total)
-    
-    ai_total = request.cookies.get('ai_total')
-    ai_total = json.loads(ai_total)
+    user_total = int(request.cookies.get('user_total'))
+    ai_total = int(request.cookies.get('ai_total'))
     
     history = json.loads(request.cookies.get('history'))
 
@@ -71,7 +68,7 @@ def submit_move():
         user_move = int(request.form['move'])
 
         # Get the AI move
-        ai_move = pick_move()
+        ai_move = pick_move(history=history)
 
         # Check the winner
         ww = check_winner(ai_move, user_move)
@@ -98,8 +95,8 @@ def submit_move():
                                                   history=pretty_history))
 
         # Update the cookies
-        response.set_cookie('user_total', json.dumps(user_total))
-        response.set_cookie('ai_total', json.dumps(ai_total))
+        response.set_cookie('user_total', str(user_total))
+        response.set_cookie('ai_total', str(ai_total))
         response.set_cookie('history', json.dumps(history))
     else:
         name = json.loads(request.cookies.get('name'))

@@ -28,8 +28,8 @@ def check_winner(p1_choice, p2_choice):
 
 #method to generate a random choice of moves
 
-def pick_move():
-    cpu_move = random.randint(0, 2)
+def pick_move(history=None):
+    cpu_move = random.randint(min(VALID_MOVES), max(VALID_MOVES))
     return cpu_move
 
 if __name__ == "__main__":
@@ -40,6 +40,6 @@ if __name__ == "__main__":
     for i in range(1000):
         result = pick_move()
         totals[result] += 1
-        print(totals)
         assert pick_move() in VALID_MOVES
+    print(totals)
     

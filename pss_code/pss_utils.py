@@ -1,5 +1,4 @@
 # Utility methods for PSS
-import random
 
 PAPER = 0
 SCISSORS = 1
@@ -26,20 +25,9 @@ def check_winner(p1_choice, p2_choice):
     return winner
 
 
-#method to generate a random choice of moves
-
-def pick_move(history=None):
-    cpu_move = random.randint(min(VALID_MOVES), max(VALID_MOVES))
-    return cpu_move
 
 if __name__ == "__main__":
     assert check_winner(PAPER, SCISSORS) == -1
     assert check_winner(PAPER, STONE) == 1
     assert check_winner(SCISSORS, SCISSORS) == 0
-    totals = {PAPER:0, SCISSORS:0, STONE:0}
-    for i in range(1000):
-        result = pick_move()
-        totals[result] += 1
-        assert pick_move() in VALID_MOVES
-    print(totals)
     

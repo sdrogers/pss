@@ -5,7 +5,8 @@ from flask import render_template, make_response
 from flask import request
 
 from pss_code.pss_utils import VALID_MOVES
-from pss_code.pss_utils import pick_move, check_winner, MOVE_DICT
+from pss_code.pss_utils import check_winner, MOVE_DICT
+from pss_code.pss_players import pick_move_random as pick_move
 
 app = Flask(__name__)
 

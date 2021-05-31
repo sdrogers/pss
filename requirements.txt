@@ -9,6 +9,7 @@ click==8.0.1
 decorator==5.0.9
 defusedxml==0.7.1
 entrypoints==0.3
+flake8==3.9.2
 Flask==2.0.1
 importlib-metadata==4.0.1
 iniconfig==1.1.1
@@ -29,6 +30,7 @@ jupyterlab-pygments==0.1.2
 jupyterlab-widgets==1.0.0
 MarkupSafe==2.0.1
 matplotlib-inline==0.1.2
+mccabe==0.6.1
 mistune==0.8.4
 nbclient==0.5.3
 nbconvert==6.0.7
@@ -48,7 +50,9 @@ prometheus-client==0.10.1
 prompt-toolkit==3.0.18
 ptyprocess==0.7.0
 py==1.10.0
+pycodestyle==2.7.0
 pycparser==2.20
+pyflakes==2.3.1
 Pygments==2.9.0
 pyparsing==2.4.7
 pyrsistent==0.17.3

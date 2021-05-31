@@ -7,8 +7,8 @@ VALID_MOVES = set([PAPER, SCISSORS, STONE])
 
 MOVE_DICT = {PAPER: 'Paper', SCISSORS: 'Scissors', STONE: 'Stone'}
 
-#method to check winner of the round
 
+# method to check winner of the round
 def check_winner(p1_choice, p2_choice):
     assert p1_choice in VALID_MOVES
     assert p2_choice in VALID_MOVES

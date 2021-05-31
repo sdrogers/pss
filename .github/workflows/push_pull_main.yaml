@@ -1,4 +1,4 @@
-name: Python package
+name: Push and pull request on main
 
 on:
   push:

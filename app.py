@@ -113,6 +113,7 @@ def submit_move():
                                    name=name)
     return response
 
+
 @app.route('/reset_scores')
 def reset_scores():
     name = request.cookies.get('name')

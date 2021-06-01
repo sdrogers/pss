@@ -32,10 +32,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: delete pycache
+      - name: pip setup
         run: |
-          rm -rf __pycache__
-          rm -rf .pytest_cache
+          pip install -e .
       - name: Test with pytest
         run: |
           pytest

@@ -1,6 +1,6 @@
-from pss_code.pss_utils import check_winner
-from pss_code.pss_utils import PAPER, SCISSORS, STONE, VALID_MOVES
-from pss_code.pss_players import pick_move_random
+from pss_app.pss_utils import check_winner
+from pss_app.pss_utils import PAPER, SCISSORS, STONE, VALID_MOVES
+from pss_app.pss_players import pick_move_random
 
 
 # test the win check method

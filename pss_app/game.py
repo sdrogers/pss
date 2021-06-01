@@ -65,20 +65,10 @@ def play():
 def submit_move():
 
     # Get the current totals and history
-    try:
-        user_total = int(request.cookies.get('user_total'))
-    except:
-        user_total = 0
-    
-    try:
-        ai_total = int(request.cookies.get('ai_total'))
-    except:
-        ai_total = 0
+    user_total = int(request.cookies.get('user_total', '0'))
+    ai_total = int(request.cookies.get('ai_total', '0'))
 
-    try:
-        history = json.loads(request.cookies.get('history'))
-    except:
-        history = []
+    history = json.loads(request.cookies.get('history', '[]'))
 
     if request.method == 'POST':
         # Get the user's move
@@ -99,7 +89,7 @@ def submit_move():
             result = 'Draw'
 
         # Add the round to the history
-        history.append((ai_move, user_move))
+        history.append([ai_move, user_move])
 
         # Make the history nice for displaying
         # (replaces the numbers with strings)

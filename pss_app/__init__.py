@@ -6,4 +6,3 @@ def create_app():
     from pss_app import game
     app.register_blueprint(game.bp)
     return app
-

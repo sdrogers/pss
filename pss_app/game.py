@@ -10,6 +10,7 @@ from pss_app.pss_players import pick_move_random as pick_move
 
 bp = Blueprint("game", __name__)
 
+
 # Main landing page - asks for name of user
 @bp.route('/')
 def index():

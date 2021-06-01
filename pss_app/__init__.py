@@ -2,9 +2,8 @@ from flask import Flask
 
 
 def create_app():
-    app = Flask(__name__, template_folder='pss_app/templates')
-    app.debug = True
-    from flaskr import app
-    app.register_blueprint(app.bp)
+    app = Flask(__name__)
+    from pss_app import game
+    app.register_blueprint(game.bp)
     return app
 

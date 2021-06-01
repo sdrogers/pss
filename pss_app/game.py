@@ -65,10 +65,20 @@ def play():
 def submit_move():
 
     # Get the current totals and history
-    user_total = int(request.cookies.get('user_total'))
-    ai_total = int(request.cookies.get('ai_total'))
+    try:
+        user_total = int(request.cookies.get('user_total'))
+    except:
+        user_total = 0
+    
+    try:
+        ai_total = int(request.cookies.get('ai_total'))
+    except:
+        ai_total = 0
 
-    history = json.loads(request.cookies.get('history'))
+    try:
+        history = json.loads(request.cookies.get('history'))
+    except:
+        history = []
 
     if request.method == 'POST':
         # Get the user's move

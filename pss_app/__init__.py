@@ -7,7 +7,7 @@ SECRET_KEY = os.urandom(32)
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__)            
     app.config['SECRET_KEY'] = SECRET_KEY
     csrf = CSRFProtect()
     csrf.init_app(app) 

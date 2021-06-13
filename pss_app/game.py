@@ -42,10 +42,15 @@ def make_pretty_history(history):
 # returns main.html, passing name
 @bp.route('/addname', methods=['POST'])
 def addname():
-    name = request.form['name']
-    response = make_response(render_template('main.html', name=name))
-    response = reset_cookie(response)
-    response.set_cookie('name', name, httponly=True, secure=True)
+    content_type = request.args['Content-Type']
+    allowed_content_types = r'application/json'
+    if re.match(allowed_content_types, content_type):        
+        name = request.form['name']
+        response = make_response(render_template('main.html', name=name))
+        response = reset_cookie(response)
+        response.set_cookie('name', name, httponly=True, secure=True)
+    else:
+        response = make_response(render_template('index.html'))
     return response
 
 

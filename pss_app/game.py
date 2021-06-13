@@ -38,15 +38,12 @@ def make_pretty_history(history):
 # Called from index with players name
 # adds name to cookie
 # returns main.html, passing name
-@bp.route('/addname', methods=['POST', 'GET'])
+@bp.route('/addname', methods=['POST'])
 def addname():
-    if request.method == 'POST':
-        name = request.form['name']
-        response = make_response(render_template('main.html', name=name))
-        response = reset_cookie(response)
-        response.set_cookie('name', name, httponly=True)
-    else:
-        response = render_template('index.html')
+    name = request.form['name']
+    response = make_response(render_template('main.html', name=name))
+    response = reset_cookie(response)
+    response.set_cookie('name', name, httponly=True)
     return response
 
 

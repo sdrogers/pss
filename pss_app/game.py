@@ -8,9 +8,11 @@ from pss_app.pss_utils import check_winner, MOVE_DICT
 from pss_app.pss_players import pick_move_random as pick_move
 
 
+PLAY_TEMPLATE = 'play.html'
+
+
 bp = Blueprint("game", __name__)
 
-PLAY_TEMPLATE = 'play.html'
 
 # Main landing page - asks for name of user
 @bp.route('/')
@@ -20,9 +22,9 @@ def index():
 
 # Useful method to just reset all the stuff in the cookie
 def reset_cookie(response):
-    response.set_cookie('ai_total', '0', httponly=True)
-    response.set_cookie('user_total', '0', httponly=True)
-    response.set_cookie('history', json.dumps([]), httponly=True)
+    response.set_cookie('ai_total', '0', httponly=True, secure=True)
+    response.set_cookie('user_total', '0', httponly=True, secure=True)
+    response.set_cookie('history', json.dumps([]), httponly=True, secure=True)
     return response
 
 
@@ -43,7 +45,7 @@ def addname():
     name = request.form['name']
     response = make_response(render_template('main.html', name=name))
     response = reset_cookie(response)
-    response.set_cookie('name', name, httponly=True)
+    response.set_cookie('name', name, httponly=True, secure=True)
     return response
 
 
@@ -94,15 +96,18 @@ def submit_move():
 
     # Make the response
     response = make_response(render_template('result.html',
-                                                result=result,
-                                                user=user_total,
-                                                ai=ai_total,
-                                                history=pretty_history))
+                                             result=result,
+                                             user=user_total,
+                                             ai=ai_total,
+                                             history=pretty_history))
 
     # Update the cookies
-    response.set_cookie('user_total', str(user_total), httponly=True)
-    response.set_cookie('ai_total', str(ai_total), httponly=True)
-    response.set_cookie('history', json.dumps(history), httponly=True)
+    response.set_cookie('user_total', str(user_total),
+                        httponly=True, secure=True)
+    response.set_cookie('ai_total', str(ai_total),
+                        httponly=True, secure=True)
+    response.set_cookie('history', json.dumps(history),
+                        httponly=True, secure=True)
     return response
 
 

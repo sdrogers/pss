@@ -59,7 +59,7 @@ def play():
 
 # Main logic, called when a user makes their move and a POST request
 # is sent from play.
-@bp.route('/submit_move', methods=['POST', 'GET'])
+@bp.route('/submit_move', methods=['POST'])
 def submit_move():
 
     # Get the current totals and history
@@ -68,48 +68,41 @@ def submit_move():
 
     history = json.loads(request.cookies.get('history', '[]'))
 
-    if request.method == 'POST':
-        # Get the user's move
-        user_move = int(request.form['move'])
+    # Get the user's move
+    user_move = int(request.form['move'])
 
-        # Get the AI move
-        ai_move = pick_move(history=history)
+    # Get the AI move
+    ai_move = pick_move(history=history)
 
-        # Check the winner
-        ww = check_winner(ai_move, user_move)
-        if ww == 1:
-            result = 'AI won!'
-            ai_total += 1
-        elif ww == -1:
-            result = 'You won!'
-            user_total += 1
-        else:
-            result = 'Draw'
-
-        # Add the round to the history
-        history.append([ai_move, user_move])
-
-        # Make the history nice for displaying
-        # (replaces the numbers with strings)
-        pretty_history = make_pretty_history(history)
-
-        # Make the response
-        response = make_response(render_template('result.html',
-                                                 result=result,
-                                                 user=user_total,
-                                                 ai=ai_total,
-                                                 history=pretty_history))
-
-        # Update the cookies
-        response.set_cookie('user_total', str(user_total), httponly=True)
-        response.set_cookie('ai_total', str(ai_total), httponly=True)
-        response.set_cookie('history', json.dumps(history), httponly=True)
+    # Check the winner
+    ww = check_winner(ai_move, user_move)
+    if ww == 1:
+        result = 'AI won!'
+        ai_total += 1
+    elif ww == -1:
+        result = 'You won!'
+        user_total += 1
     else:
-        name = json.loads(request.cookies.get('name'))
-        response = render_template(PLAY_TEMPLATE,
-                                   user_total=user_total,
-                                   ai_total=ai_total,
-                                   name=name)
+        result = 'Draw'
+
+    # Add the round to the history
+    history.append([ai_move, user_move])
+
+    # Make the history nice for displaying
+    # (replaces the numbers with strings)
+    pretty_history = make_pretty_history(history)
+
+    # Make the response
+    response = make_response(render_template('result.html',
+                                                result=result,
+                                                user=user_total,
+                                                ai=ai_total,
+                                                history=pretty_history))
+
+    # Update the cookies
+    response.set_cookie('user_total', str(user_total), httponly=True)
+    response.set_cookie('ai_total', str(ai_total), httponly=True)
+    response.set_cookie('history', json.dumps(history), httponly=True)
     return response
 
 

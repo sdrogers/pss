@@ -1,6 +1,6 @@
-from pss_code.pss_utils import check_winner
-from pss_code.pss_utils import PAPER, SCISSORS, STONE, VALID_MOVES
-from pss_code.pss_players import pick_move_random
+from pss_app.pss_utils import check_winner
+from pss_app.pss_utils import PAPER, SCISSORS, STONE, VALID_MOVES
+from pss_app.pss_players import pick_move_random
 
 
 # test the win check method
@@ -17,7 +17,7 @@ def test_win_check():
 # all VALID_MOVES
 def test_pick_move_random():
     totals = {v: 0 for v in VALID_MOVES}
-    for i in range(1000):
+    for _ in range(1000):
         move = pick_move_random()
         assert move in VALID_MOVES
         totals[move] += 1

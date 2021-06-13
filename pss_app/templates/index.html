@@ -1,7 +1,10 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head><title>PSS</title></head>
     <body>
         <p><h3>Hello</h3></p>
         <form action = '/addname' method = 'POST'>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <p><label for = 'name'>Your name please</label></p>
             <p><input type = 'text' name = 'name' /></p>
             <p><input type = 'submit' value = 'Submit' /></p>

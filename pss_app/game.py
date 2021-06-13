@@ -20,9 +20,9 @@ def index():
 
 # Useful method to just reset all the stuff in the cookie
 def reset_cookie(response):
-    response.set_cookie('ai_total', '0', httponly=True, secure=True)
-    response.set_cookie('user_total', '0', httponly=True, secure=True)
-    response.set_cookie('history', json.dumps([]), httponly=True, secure=True)
+    response.set_cookie('ai_total', '0', httponly=True)
+    response.set_cookie('user_total', '0', httponly=True)
+    response.set_cookie('history', json.dumps([]), httponly=True)
     return response
 
 
@@ -43,7 +43,7 @@ def addname():
     name = request.form['name']
     response = make_response(render_template('main.html', name=name))
     response = reset_cookie(response)
-    response.set_cookie('name', name, httponly=True, secure=True)
+    response.set_cookie('name', name, httponly=True)
     return response
 
 
@@ -100,9 +100,9 @@ def submit_move():
                                                 history=pretty_history))
 
     # Update the cookies
-    response.set_cookie('user_total', str(user_total), httponly=True, secure=True)
-    response.set_cookie('ai_total', str(ai_total), httponly=True, secure=True)
-    response.set_cookie('history', json.dumps(history), httponly=True, secure=True)
+    response.set_cookie('user_total', str(user_total), httponly=True)
+    response.set_cookie('ai_total', str(ai_total), httponly=True)
+    response.set_cookie('history', json.dumps(history), httponly=True)
     return response
 
 

@@ -10,6 +10,7 @@ from pss_app.pss_players import pick_move_random as pick_move
 
 bp = Blueprint("game", __name__)
 
+PLAY_TEMPLATE = 'play.html'
 
 # Main landing page - asks for name of user
 @bp.route('/')
@@ -54,7 +55,7 @@ def play():
     name = request.cookies.get('name')
     user_total = int(json.loads(request.cookies.get('user_total')))
     ai_total = int(json.loads(request.cookies.get('ai_total')))
-    return render_template('play.html', name=name,
+    return render_template(PLAY_TEMPLATE, name=name,
                            user_total=user_total,
                            ai_total=ai_total)
 
@@ -108,7 +109,7 @@ def submit_move():
         response.set_cookie('history', json.dumps(history))
     else:
         name = json.loads(request.cookies.get('name'))
-        response = render_template('play.html',
+        response = render_template(PLAY_TEMPLATE,
                                    user_total=user_total,
                                    ai_total=ai_total,
                                    name=name)
@@ -118,6 +119,6 @@ def submit_move():
 @bp.route('/reset_scores')
 def reset_scores():
     name = request.cookies.get('name')
-    response = make_response(render_template('play.html', name=name))
+    response = make_response(render_template(PLAY_TEMPLATE, name=name))
     response = reset_cookie(response)
     return response

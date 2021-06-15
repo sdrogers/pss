@@ -54,7 +54,6 @@ Pillow==8.2.0
 pluggy==0.13.1
 prometheus-client==0.10.1
 prompt-toolkit==3.0.18
--e git+https://github.com/sdrogers/pss.git@ca77ad8be95cc46f71d30edf8864123fa9829eae#egg=pss_app
 ptyprocess==0.7.0
 py==1.10.0
 pycodestyle==2.7.0

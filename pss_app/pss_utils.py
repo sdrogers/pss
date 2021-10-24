@@ -38,7 +38,6 @@ def dump_history_to_csv(history, name, file_name=None):
     if file_name is None:
         file_name = f'{name}_{int(time.time())}.csv'
 
-
     # check if folder exists
     if not os.path.isdir('game_dumps'):
         os.makedirs('game_dumps')
@@ -49,5 +48,3 @@ def dump_history_to_csv(history, name, file_name=None):
         writer.writerow(head_line)
         for move in history:
             writer.writerow(move)
-    
-

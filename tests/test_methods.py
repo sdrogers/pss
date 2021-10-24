@@ -11,9 +11,14 @@ from pss_app.pss_players import pick_move_random
 def test_win_check():
     assert check_winner(PAPER, SCISSORS) == -1
     assert check_winner(PAPER, STONE) == 1
+    assert check_winner(PAPER, PAPER) == 0
     assert check_winner(SCISSORS, SCISSORS) == 0
-    assert check_winner(STONE, STONE) == 0
+    assert check_winner(SCISSORS, PAPER) == 1
     assert check_winner(SCISSORS, STONE) == -1
+    assert check_winner(STONE, STONE) == 0
+    assert check_winner(STONE, PAPER) == -1
+    assert check_winner(STONE, SCISSORS) == 1
+
 
 
 # test the random player to check it always returns

@@ -24,7 +24,7 @@ def check_winner(p1_choice, p2_choice):
         winner = -1
     elif p2_choice == p1_choice - 2:
         winner = -1
-    elif p2_choice == p1_choice:
+    else:  # both the same
         winner = 0
     return winner
 

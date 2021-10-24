@@ -46,10 +46,16 @@ def test_write_csv():
     expected_file_name = f'{slug_name}_12345.csv'
     file_path = os.path.join('game_dumps', expected_file_name)
 
+    # delete the file if it exists already
+    # to avoid the test passing because 
+    # the file was leftover previously
+    if os.path.isfile(file_path):
+        os.remove(file_path)
+
     # Call the method
     dump_history_to_csv(history, name)
     
-    # Check that the file exists (should probably delete before)
+    # Check that the file exists
     assert os.path.isfile(file_path)
     
     # Open the file and check its contents

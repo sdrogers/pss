@@ -20,7 +20,6 @@ def test_win_check():
     assert check_winner(STONE, SCISSORS) == 1
 
 
-
 # test the random player to check it always returns
 # a move in VALID_MOVES and to check that it uses
 # all VALID_MOVES

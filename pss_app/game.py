@@ -3,6 +3,7 @@ import json
 from flask import Blueprint
 from flask import render_template, make_response
 from flask import request
+from flask.wrappers import Response
 
 from pss_app.pss_utils import check_winner, MOVE_DICT
 from pss_app.pss_players import pick_move_random as pick_move
@@ -13,12 +14,12 @@ bp = Blueprint("game", __name__)
 
 # Main landing page - asks for name of user
 @bp.route('/')
-def index():
+def index() -> str:
     return render_template('index.html')
 
 
 # Useful method to just reset all the stuff in the cookie
-def reset_cookie(response):
+def reset_cookie(response: Response) -> Response:
     response.set_cookie('ai_total', '0', httponly=True, secure=True)
     response.set_cookie('user_total', '0', httponly=True, secure=True)
     response.set_cookie('history', json.dumps([]), httponly=True, secure=True)
@@ -27,7 +28,8 @@ def reset_cookie(response):
 
 # turn a history of ints into strings to make it nicer
 # for visualisation
-def make_pretty_history(history):
+def make_pretty_history(history: list[list[int]]) -> list[list[str]]:
+    pretty_history: list[list[str]]
     pretty_history = []
     for h in history:
         pretty_history.append([MOVE_DICT[h[0]], MOVE_DICT[h[1]]])
@@ -38,7 +40,7 @@ def make_pretty_history(history):
 # adds name to cookie
 # returns main.html, passing name
 @bp.route('/addname', methods=['POST'])
-def addname():
+def addname() -> Response:
     name = request.form['name']
     response = make_response(render_template('main.html', name=name))
     response = reset_cookie(response)
@@ -47,10 +49,10 @@ def addname():
 
 
 @bp.route('/play')
-def play():
+def play() -> str:
     name = request.cookies.get('name')
-    user_total = int(json.loads(request.cookies.get('user_total')))
-    ai_total = int(json.loads(request.cookies.get('ai_total')))
+    user_total = int(json.loads(request.cookies.get('user_total', '0')))
+    ai_total = int(json.loads(request.cookies.get('ai_total', '0')))
     return render_template('play.html', name=name,
                            user_total=user_total,
                            ai_total=ai_total)
@@ -59,7 +61,7 @@ def play():
 # Main logic, called when a user makes their move and a POST request
 # is sent from play.
 @bp.route('/submit_move', methods=['POST'])
-def submit_move():
+def submit_move() -> Response:
 
     # Get the current totals and history
     user_total = int(request.cookies.get('user_total', '0'))
@@ -109,7 +111,7 @@ def submit_move():
 
 
 @bp.route('/reset_scores')
-def reset_scores():
+def reset_scores() -> Response:
     name = request.cookies.get('name')
     response = make_response(render_template('play.html', name=name))
     response = reset_cookie(response)

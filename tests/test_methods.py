@@ -43,12 +43,16 @@ def test_write_csv():
     ]
     name = 'simon rogers test'
     slug_name = slugify(name)
-    dump_history_to_csv(history, name)
     expected_file_name = f'{slug_name}_12345.csv'
     file_path = os.path.join('game_dumps', expected_file_name)
 
+    # Call the method
+    dump_history_to_csv(history, name)
+    
+    # Check that the file exists (should probably delete before)
     assert os.path.isfile(file_path)
     
+    # Open the file and check its contents
     with open(file_path, 'r') as f:
         reader = csv.reader(f)
         heads = next(reader)

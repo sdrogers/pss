@@ -1,5 +1,4 @@
 import os
-import time
 import csv
 from mock import mock
 from slugify import slugify
@@ -31,7 +30,7 @@ def test_pick_move_random():
 
 
 # test that the file writing makes a correct file
-# mock the time.time call in pss_utils to 
+# mock the time.time call in pss_utils to
 # return 12345 regardless of the actual time
 @mock.patch('pss_app.pss_utils.time.time', mock.MagicMock(return_value=12345))
 def test_write_csv():
@@ -47,18 +46,18 @@ def test_write_csv():
     file_path = os.path.join('game_dumps', expected_file_name)
 
     # delete the file if it exists already
-    # to avoid the test passing because 
+    # to avoid the test passing because
     # the file was leftover previously
     if os.path.isfile(file_path):
         os.remove(file_path)
 
     # Call the method
     dump_history_to_csv(history, name)
-    
+
     # Check that the file exists
     assert os.path.isfile(file_path)
-    
-    # Open the file and check its contents
+
+    # Open the file and check its contents
     with open(file_path, 'r') as f:
         reader = csv.reader(f)
         heads = next(reader)
@@ -66,6 +65,5 @@ def test_write_csv():
         assert heads == ['AI', slug_name]
         for i, line in enumerate(reader):
             # check the other lines
-            int_line = [int(l) for l in line]
+            int_line = [int(move) for move in line]
             assert int_line == history[i]
-
